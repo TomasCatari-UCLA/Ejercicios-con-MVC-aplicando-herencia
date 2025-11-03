@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARNAVAL-OUTLET</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>CARNAVAL-OUTLET</h2>
+    
+    <section id="disfrazForm" hidden>
+        <h3 style="width: 235px;">Disfraz: <span id="disfrazForm_lblTipo"></span></h3>
+        <label>Código:
+            <input type="string" id="disfrazForm_inCodigo"></input>
+        </label>
+        <label>Nombre:
+            <input type="string" id="disfrazForm_inNombre"></input>
+        </label>
+        <label>Talla:
+            <input type="string" id="disfrazForm_inTalla"></input>
+        </label>
+        <label>Precio:
+            <input type="number" id="disfrazForm_inPrecio"></input>
+        </label>
+        <label hidden id="disfrazForm_divInAccesorio">Accesorio:
+            <input type="string" id="disfrazForm_inAccesorio"></input>
+        </label>
+        <label hidden id="disfrazForm_divInSexo">Sexo:
+            <input type="string" id="disfrazForm_inSexo"></input>
+        </label>
+        <div>
+            <button id="disfrazForm_btAceptarNiño" hidden>Aceptar</button>
+            <button id="disfrazForm_btAceptarAdulto" hidden>Aceptar</button>
+            <button id="disfrazForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="mainForm">
+        <h3>Disfraces procesados</h3>
+        <table>
+            <thead>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Talla</th>
+                <th>Precio</th>
+                <th>Accesorio</th>
+                <th>Sexo</th>
+                <th>PrecioFinal</th>
+            </thead>
+            <tbody id="mainForm_dataDisfraz"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarNiño">+ Niño</button>
+            <button id="mainForm_btAgregarAdulto">+ Adulto</button>
+        </div>
+        <h3>Resultados de la tienda</h3>
+        <div class="divSalida">
+            <label>Total Vendido:$
+                <span id="mainForm_lblTotalVendido"></span>
+            </label>
+            <label>Cantidad de Adultos Femeninos:
+                <span id="mainForm_lblCantAdulFem"></span>
+            </label>
+            <label>Porcentaje de Adultos Femeninos de talla S:
+                <span id="mainForm_lblPorcentajeDisfFemTallaS"></span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+</html>

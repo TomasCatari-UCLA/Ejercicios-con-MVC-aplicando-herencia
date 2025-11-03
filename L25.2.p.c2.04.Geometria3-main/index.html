@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOMETRÍA-3</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>GEOMETRÍA-3</h2>
+    
+    <section id="figuraForm" hidden>
+        <h3 style="width: 250px;">Figura: <span id="figuraForm_lblTipo"></span></h3>
+        <label>Código:
+            <input type="text" id="figuraForm_inCodigo"></input>
+        </label>
+        <label>Coordenada X:
+            <input type="number" id="figuraForm_inCoordX"></input>
+        </label>
+        <label>Coordenada Y:
+            <input type="number" id="figuraForm_inCoordY"></input>
+        </label>
+        <label hidden id="figuraForm_divInLado">Lado:
+            <input type="number" id="figuraForm_inLado"></input>
+        </label>
+        <label hidden id="figuraForm_divInRadio">Radio:
+            <input type="number" id="figuraForm_inRadio"></input>
+        </label>
+        <div>
+            <button id="figuraForm_btAceptarCuadrado" hidden>Aceptar</button>
+            <button id="figuraForm_btAceptarCirculo" hidden>Aceptar</button>
+            <button id="figuraForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="mainForm">
+        <h3>Figuras Procesadas</h3>
+        <table>
+            <thead>
+                <th>Código</th>
+                <th>Tipo</th>
+                <th>Coord X</th>
+                <th>Coord Y</th>
+                <th>Lado</th>
+                <th>Radio</th>
+                <th>Área</th>
+                <th>Perímetro</th>
+            </thead>
+            <tbody id="mainForm_dataFiguras"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarCuadrado">+ Cuadrado</button>
+            <button id="mainForm_btAgregarCirculo">+ Círculo</button>
+        </div>
+        <h3>Resultados del Procesador</h3>
+        <div class="divSalida">
+            <label>Área Total de todas las figuras:
+                <span id="mainForm_lblAreaTotal"></span>
+            </label>
+            <label>Figura que cubre mayor espacio:
+                <span id="mainForm_lblFiguraMayor"></span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+
+</html>

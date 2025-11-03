@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANTO VIAJE - Agencia de Paquetes</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>SANTO VIAJE</h2>
+
+    <section id="paqueteForm" hidden>
+        <h3 style="width: 250px;">Paquete <span id="paqueteForm_lblTipo"></span></h3>
+        
+        <label>Codigo:
+            <input type="number" id="paqueteForm_inCodigo"></input>
+        </label>
+        <label>Costo:
+            <input type="number" id="paqueteForm_inCosto"></input>
+        </label>
+        
+        <div id="paqueteForm_divInDestino" hidden> 
+            <label>Destino (1:Playa, 2:Montaña):
+                <input type="number" id="paqueteForm_inDestino" min="1" max="2"></input>
+            </label>
+        </div>
+
+        <div>
+            <button id="paqueteForm_btAceptarNacional" hidden>Aceptar Nacional</button>
+            <button id="paqueteForm_btAceptarInternacional" hidden>Aceptar Internacional</button>
+            
+            <button id="paqueteForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="mainForm">
+        <h3>Reporte de Paquetes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Costo Original</th>
+                    <th>Destino (1/2)</th>
+                    <th>Descuento</th>
+                    <th>Precio a pagar </th>
+                </tr>
+            </thead>
+            <tbody id="mainForm_dataPaquete"></tbody> 
+        </table>
+
+        <div class="divBotones">
+            <button id="mainForm_btAgregarInternacional">+ Viaje Internacional</button>
+            <button id="mainForm_btAgregarNacional">+ Viaje Nacional</button>
+        </div>
+
+        <h3>Información de la Agencia</h3>
+        <div class="divSalida">
+            <label>Total vendido: $
+                <span id="mainForm_lblTotalVentas">0</span> 
+            </label>
+            <label>Porcentaje de viajes internacionales: %
+                 <span id="mainForm_lblPorcentaje">0</span>
+            </label>
+             <label>Paquetes internacionales: 
+                 <span id="mainForm_lblpaquetesInternacioles">0</span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+       import Cl_index from "./dist/Cl_index.js";
+    new Cl_index();
+    </script>
+</body>
+
+</html>

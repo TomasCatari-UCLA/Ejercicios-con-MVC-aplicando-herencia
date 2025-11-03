@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de mobilarios</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>Muebleria</h2> 
+
+  <!-- mobilarios (base para operadores y directivos) -->
+  <section id="mobilarioForm" hidden>
+    <h3 style="width: 250px;">mobilario de <span id="mobilarioForm_lblTipo"></span></h3>
+    <label>Madera:
+      <input type="number" id="mobilarioForm_inMadera" />
+    </label>
+    <label>Factura:
+      <input type="text" id="mobilarioForm_inFactura" />
+    </label>
+   
+    <!-- Campo específico para operadores -->
+    <div id="mobilarioForm_divSillas" hidden>
+      <label>Sillas:
+        <input type="number" id="mobilarioForm_inSillas" />
+      </label>
+    </div>
+
+    <!-- Campo específico para directivos -->
+    <div id="mobilarioForm_divTela" hidden>
+      <label> Tela (1, 2 o 3):
+        <select id="mobilarioForm_inTela" >
+          <option value=1>1</option>
+          <option value=2>2</option>
+          <option value=3>3</option>
+           </select>
+      </label>
+    </div>
+
+    <div>
+      <button id="mobilarioForm_btnAceptarComedor" hidden>Aceptar Comedor</button>
+      <button id="mobilarioForm_btnAceptarMueble" hidden>Aceptar Mueble</button>
+      <button id="mobilarioForm_btCancelar">Cancelar</button>
+    </div>
+  </section>
+
+  <!-- Vista principal -->
+  <section id="mainForm">
+    <h3>mobilarios Procesados</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Factura</th>
+          <th>Madera</th>
+          <th>Sillas </th>
+          <th>Tela</th>
+          <th>PrecioM3()</th>
+          <th>m3()</th>
+          <th>Incremento()</th>
+          <th>Precio()</th>
+        </tr>
+      </thead>
+      <tbody id="mainForm_dataMobilario"></tbody>
+    </table>
+
+    <div class="divBotones">
+      <button id="mainForm_btnAgregarComedor">+ Comedor</button>
+      <button id="mainForm_btnAgregarMueble">+ Mueble</button>
+    </div>
+
+    <h3>Resumen de Pagos</h3>
+    <div class="divSalida">
+
+      <label>
+        Mayor vendido:
+        <span id="mainForm_lblMayorVendido"></span>
+      </label>
+
+      <label>porcentaje del Comedor vendidos (4 de 8) : %.
+        <span id="mainForm_lblPorcentajeComedor"></span>
+      </label>
+
+      <label>
+        Monto total vendido: $.
+        <span id="mainForm_lblTotalVendido"></span>
+      </label>
+      
+    </div>
+  </section>
+
+  <script type="module">
+    import Cl_index from "./dist/Cl_index.js";
+    new Cl_index();
+  </script>
+</body>
+</html>

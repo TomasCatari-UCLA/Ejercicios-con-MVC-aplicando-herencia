@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARTU CHICOS </title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>CARTU CHICOS </h2>
+    
+    <section id="ImpresoraForm" hidden>
+        <h3 style="width: 235px;">Impresora: <span id="ImpresoraForm_lblTipo"></span></h3>
+        <label>Id:
+            <input type="number" id= "ImpresoraForm_inId"></input>
+        </label>
+        <label hidden id="ImpresoraForm_divIntipoTinta">Tipo tinta:
+            <input type="number" id="ImpresoraForm_intipoTinta"></input>
+        </label>
+        <label hidden id="ImpresoraForm_divCantToner">Cantidad Tuners::
+            <input type="number" id="ImpresoraForm_inCantToner"></input>
+        </label>
+        <div>
+            <button id="ImpresoraForm_btAceptarLaser" hidden>Aceptar Laser</button>
+            <button id="ImpresoraForm_btAceptarTinta" hidden>Aceptar tinta</button>
+            <button id="ImpresoraForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="mainForm">
+        <h3>Impresoras procesadas</h3>
+        <table>
+            <thead>
+                <th>Id</th>
+                <th>Tipo tinta</th>
+                <th>Cantidad de Torner</th>
+                <th>Precio por pagar</th>
+            </thead>
+            <tbody id="mainForm_dataImpresora"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarTinta">Agregar Tinta</button>
+            <button id="mainForm_btAgregarLaser">Agregar Laser</button>
+        </div>
+        <h3>Resultados de la tienda</h3>
+        <div class="divSalida">
+            <label>Cant. Láser:
+                <span id="mainForm_lblcantidadLaser"></span>
+            </label>
+            <label>% impresoras láser:
+                <span id="mainForm_lblporcentajeImpresoraLaser"></span>
+            </label>
+            <label> Cant. Impresoras:
+                <span id="mainForm_lblcantImpresoras"></span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+</html>

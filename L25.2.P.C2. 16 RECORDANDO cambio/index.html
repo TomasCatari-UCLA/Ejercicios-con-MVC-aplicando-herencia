@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recordando</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>Recordando</h2>
+    
+    <section id="promocionForm" hidden>
+        <h3 style="width: 235px;">Promocion: <span id="promocionForm_lblTipo"></span></h3>
+        <label>Código:
+            <input type="string" id="promocionForm_inCodigo"></input>
+        </label>
+        <label>Costo:
+            <input type="number" id="promocionForm_inCosto"></input>
+        </label>
+         <label>esUrgente:
+            <input type="checkbox" id="promocionForm_inEsUrgente"></input>
+        </label>
+        <label hidden id="promocionForm_divInTipoF">Tipo de Foto:
+            <select id="promocionForm_inTipoF">
+                <option value="I">Impresa</option>
+                <option value="D">Digital</option>
+            </select>
+        </label>
+        <label hidden id="promocionForm_divInHD">HD:
+            <select id="promocionForm_inHD">
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+            </select>
+        </label>
+        <div>
+            <button id="promocionForm_btAceptarFotografia" hidden>Aceptar</button>
+            <button id="promocionForm_btAceptarVideo" hidden>Aceptar</button>
+            <button id="promocionForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="mainForm">
+        <h3>Promociones procesadas</h3>
+        <table>
+            <thead>
+                <th>Código</th>
+                <th>Costo</th>
+                <th>EsUrgente</th>
+                <th>Tipo de Foto</th>
+                <th>HD</th>
+                <th>Descuento</th>
+                <th>Incremento</th>
+                <th>EdicionEspecial</th>
+                <th>PrecioF</th>
+            </thead>
+            <tbody id="mainForm_dataPromocion"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarFotografia">+ Fotografia</button>
+            <button id="mainForm_btAgregarVideo">+ Video</button>
+        </div>
+        <h3>Resultados de la tienda</h3>
+        <div class="divSalida">
+            <label>Total Vendido:$
+                <span id="mainForm_lblTotalVendido"></span>
+            </label>
+            <label>Cantidad de fotos digitales:
+                <span id="mainForm_lblCantFotoD"></span>
+            </label>
+            <label>SubTotal en Fotos digitales:$
+                <span id="mainForm_lblSubTotalFD"></span>
+            </label>
+            <label>Promedio de Ventas en Fotos digitales:$
+                <span id="mainForm_lblPromedioVentasFD"></span>
+            </label>
+            <label>Monto total facturado por edicion especial:$
+                <span id="mainForm_lblMontoFacturaEdicionEspecial"></span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+</html>

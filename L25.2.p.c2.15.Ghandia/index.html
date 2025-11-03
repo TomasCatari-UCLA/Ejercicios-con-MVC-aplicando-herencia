@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Empleados</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h2>Manufactura</h2>
+
+  <!-- empleados (base para operadores y directivos) -->
+  <section id="empleadoForm" hidden>
+    <h3 style="width: 250px;">Empleado de <span id="empleadoForm_lblTipo"></span></h3>
+    <label>ID:
+      <input type="number" id="empleadoForm_inId" />
+    </label>
+    <label>Nombre:
+      <input type="text" id="empleadoForm_inNombre" />
+    </label>
+    <label>Sueldo Base:
+      <input type="number" id="empleadoForm_inSueldoBase" />
+    </label>
+
+    <!-- Campo específico para operadores -->
+    <div id="empleadoForm_divInHoraExtra" hidden>
+      <label>Horas Extra:
+        <input type="number" id="empleadoForm_inHoraExtra" />
+      </label>
+    </div>
+
+    <!-- Campo específico para directivos -->
+    <div id="empleadoForm_divInNocturno" hidden>
+      <label>Turno Nocturno (Si/No):
+        <select id="empleadoForm_inNocturno" >
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+           </select>
+      </label>
+    </div>
+
+    <div>
+      <button id="empleadoForm_btAceptarOperadores" hidden>Aceptar Operador</button>
+      <button id="empleadoForm_btAceptarDirectivo" hidden>Aceptar Directivo</button>
+      <button id="empleadoForm_btCancelar">Cancelar</button>
+    </div>
+  </section>
+
+  <!-- Vista principal -->
+  <section id="mainForm">
+    <h3>Empleados Procesados</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Sueldo Base </th>
+          <th>Horas Extra</th>
+          <th>Nocturno</th>
+          <th>Prima</th>
+          <th>Adicional</th>
+          <th>Sueldo mensual</th>
+        </tr>
+      </thead>
+      <tbody id="mainForm_dataEmpleados"></tbody>
+    </table>
+
+    <div class="divBotones">
+      <button id="mainForm_btAgregarOperadores">+ Operador</button>
+      <button id="mainForm_btAgregarDirectivos">+ Directivo</button>
+    </div>
+
+    <h3>Resumen de Pagos</h3>
+    <div class="divSalida">
+      <label>Monto total pagado: $.
+        <span id="mainForm_lblmontoTotalPagado"></span>
+      </label>
+      <label>Monto adicional operadores: $.
+        <span id="mainForm_lblmontoAdicionalOperadores"></span>
+      </label>
+      <label>Monto adicional directivos: $.
+        <span id="mainForm_lblmontoAdicionalDirectivos"></span>
+      </label>
+    </div>
+  </section>
+
+  <script type="module">
+    import Cl_index from "./dist/Cl_index.js";
+    new Cl_index();
+  </script>
+</body>
+</html>

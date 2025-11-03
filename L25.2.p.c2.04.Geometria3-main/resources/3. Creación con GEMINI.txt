@@ -1,0 +1,1039 @@
+Vamos a programar un nuevo proyecto en TypeScript, con arquitectura MVC.
+
+Comenzaremos con el modelo.
+Te anexo el subproyecto MVC-modelo, de un proyecto existente llamado SEGURÍSIMOS, todas las clases del modelo, para que sirva de ejemplo del estilo de programación.
+El archivo Cl_index.ts tiene el planteamiento del proyecto.
+También te anexo el Diagrama de Clases para que comprendas el diseño.
+El planteamiento que resolveremos es el siguiente:
+/**
+ * GEOMETRÍA-3
+ * Se conoce de cualquier figura geométrica un punto de origen,
+ * es decir coordenadas x, y.
+ * Para un Cuadrado se considera su punto de origen la esquina superior
+ * izquierda, se tiene la longitud de su lado, y se sabe:
+ * Área= Lado * Lado, Perímetro = 4 * Lado.
+ * Ej: El cuadrado se ubica en las coordenadas 4, 5, tiene área de 25 y perímetro de 20.
+ *
+ * Para un Círculo se considera su punto de origen el centro del mismo, se
+ * tiene la longitud de su radio, y se sabe: Área= pi * radio^2 (radio * radio)
+ * Perímetro= 2 * pi * radio.
+ * Ej: El círculo se ubica en las coordenadas 2, 3, tiene área de XX y perímetro
+ * de YY. Nota: pi es una función disponible en JavaScript.
+ *
+ * Determine el área y el perímetro de cada figura, así como el área total que suman
+ * todas las figuras y cual tipo de figura cubriría mayor espacio.
+ * 
+ * Se tienen los siguientes datos de prueba:
+ * Cuadrados {codigo, coordX, coordY, lado}
+ * {cuad1, 2, 4, 3}
+ * {cuad2, 1, 2, 5}
+ * {cuad3, 1, -2, 4}
+ * {cuad4, 0, 0, 8}
+ * 
+ * Círculos {codigo, coordX, coordY, radio}
+ * {circ1, 3, 0, 4}
+ * {circ2, 1, -3, 2}
+ * {circ3, 0, 0, 3}
+ * {circ4, -2, -4, 5}
+ * /
+
+Realicé el siguiente análisis y diseñé las clases del modelo:
+/* Análisis:
+ * a- Título: Geometría 3
+ * b- Se procesan varias figuras para determinar el área y el perímetro de cada una, así
+ *    como alguna información para el procesador de figuras
+ *    Análisis de Herencia:
+ *    - Clase base: Cl_mFigura
+ *    - Clase derivada: Cl_mCirculo
+ *    - Clase derivada: Cl_mCuadrado
+ *    - Clase que procesa las figuras: Cl_mProcesador
+ * c- Requerimientos:
+ *    - Por figura: área y perímetro
+ *    - Por procesador: c.1. El área total que suman todas las figuras
+ *                      c.2. Cuál figura cubriría mayor espacio
+ * d- Ejemplo: d.1. Cuadrado: coordX: 1, coordY: 2, lado: 3, área(): 9, perímetro(): 12
+ *             d.2. Círculo: coordX: 0, coordY: 3, radio: 2, 
+ *                  área(): pi * radio * radio, perímetro(): 2 * pi * radio
+ * e- Diseño de clases del modelo:
+ *    e.1. Cl_mFigura
+ *          #coordX: number
+ *          #coordY: number
+ *          +constructor(coordX: number, coordY: number)
+ *          +area(): number {abstract}
+ *          +perimetro(): number {abstract}
+ *    e.2. Cl_mCirculo extends Cl_mFigura
+ *          #radio: number
+ *          +constructor(coordX: number, coordY: number, radio: number)
+ *          +area(): number
+ *          +perimetro(): number
+ *    e.3. Cl_mCuadrado extends Cl_mFigura
+ *          #lado: number
+ *          +constructor(coordX: number, coordY: number, lado: number)
+ *          +area(): number
+ *          +perimetro(): number
+ *    e.4. Cl_mProcesador
+ *          -acAreaCirculos: number
+ *          -acAreaCuadrados: number
+ *          +constructor()
+ *          +procesarFigura(figura: Cl_mFigura): void
+ *          +areaTotal(): number
+ *          +figuraMayorEspacio(): Cl_mFigura
+ */
+
+Quiero que uses el mismo estilo de programación del proyecto SEGURÍSIMOS y me entregues el código en typescript de este proyecto GEOMETRÍA-3, partiendo del diseño que logré
+
+Claro, aquí tienes el código TypeScript para las clases del modelo del proyecto GEOMETRÍA-3, siguiendo el estilo de programación y el diseño que proporcionaste.
+________________________________________
+Cl_mFigura.ts (Clase Base)
+Esta es la clase base que contiene las propiedades y métodos comunes a todas las figuras geométricas, como sus coordenadas. Los métodos area() y perimetro() se definen aquí, pero serán las clases derivadas quienes los implementen con la lógica específica de cada figura.
+TypeScript
+export default class Cl_mFigura {
+  // Propiedades con un guion bajo, un patrón común para indicar que
+  // se deben usar los getters y setters para acceder a ellas.
+  public _codigo: string = "";
+  public _coordX: number = 0;
+  public _coordY: number = 0;
+
+  constructor({
+    codigo,
+    coordX,
+    coordY,
+  }: {
+    codigo: string;
+    coordX: number;
+    coordY: number;
+  }) {
+    this.codigo = codigo;
+    this.coordX = coordX;
+    this.coordY = coordY;
+  }
+
+  // Setters y Getters para cada propiedad
+  set codigo(codigo: string) {
+    this._codigo = codigo;
+  }
+  get codigo(): string {
+    return this._codigo;
+  }
+
+  set coordX(coordX: number) {
+    this._coordX = +coordX;
+  }
+  get coordX(): number {
+    return this._coordX;
+  }
+
+  set coordY(coordY: number) {
+    this._coordY = +coordY;
+  }
+  get coordY(): number {
+    return this._coordY;
+  }
+
+  // Métodos que serán sobreescritos por las clases hijas
+  area(): number {
+    return 0; // Implementación base
+  }
+
+  perimetro(): number {
+    return 0; // Implementación base
+  }
+
+  // Devuelve un objeto simple con los datos de la figura para facilitar su visualización
+  toJSON() {
+    return {
+      codigo: this.codigo,
+      coordX: this.coordX,
+      coordY: this.coordY,
+      area: this.area(),
+      perimetro: this.perimetro(),
+    };
+  }
+}
+________________________________________
+Cl_mCuadrado.ts (Clase Derivada)
+Esta clase hereda de Cl_mFigura y añade la propiedad lado. Sobrescribe los métodos area() y perimetro() para aplicar las fórmulas específicas del cuadrado.
+TypeScript
+import Cl_mFigura from "./Cl_mFigura.js";
+
+export default class Cl_mCuadrado extends Cl_mFigura {
+  private _lado: number = 0;
+
+  constructor({
+    codigo,
+    coordX,
+    coordY,
+    lado,
+  }: {
+    codigo: string;
+    coordX: number;
+    coordY: number;
+    lado: number;
+  }) {
+    // Llama al constructor de la clase padre (Cl_mFigura)
+    super({ codigo, coordX, coordY });
+    this.lado = lado;
+  }
+
+  set lado(lado: number) {
+    this._lado = +lado;
+  }
+  get lado(): number {
+    return this._lado;
+  }
+
+  // Sobrescritura de los métodos con la lógica del cuadrado
+  area(): number {
+    return this.lado * this.lado;
+  }
+
+  perimetro(): number {
+    return 4 * this.lado;
+  }
+
+  // Amplía el método toJSON del padre para incluir la propiedad 'lado'
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      lado: this.lado,
+      tipo: "Cuadrado",
+    };
+  }
+}
+________________________________________
+Cl_mCirculo.ts (Clase Derivada)
+Al igual que Cl_mCuadrado, esta clase hereda de Cl_mFigura, añade la propiedad radio e implementa los cálculos de area() y perimetro() para un círculo.
+TypeScript
+import Cl_mFigura from "./Cl_mFigura.js";
+
+export default class Cl_mCirculo extends Cl_mFigura {
+  private _radio: number = 0;
+
+  constructor({
+    codigo,
+    coordX,
+    coordY,
+    radio,
+  }: {
+    codigo: string;
+    coordX: number;
+    coordY: number;
+    radio: number;
+  }) {
+    // Llama al constructor de la clase padre (Cl_mFigura)
+    super({ codigo, coordX, coordY });
+    this.radio = radio;
+  }
+
+  set radio(radio: number) {
+    this._radio = +radio;
+  }
+  get radio(): number {
+    return this._radio;
+  }
+
+  // Sobrescritura de los métodos con la lógica del círculo
+  area(): number {
+    return Math.PI * this.radio * this.radio;
+  }
+
+  perimetro(): number {
+    return 2 * Math.PI * this.radio;
+  }
+
+  // Amplía el método toJSON del padre para incluir la propiedad 'radio'
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      radio: this.radio,
+      tipo: "Círculo",
+    };
+  }
+}
+________________________________________
+Cl_mProcesador.ts (Clase de Procesamiento)
+Esta clase se encarga de procesar las diferentes figuras, acumular sus áreas y determinar cuál de ellas ocupa el mayor espacio.
+TypeScript
+import Cl_mCirculo from "./Cl_mCirculo.js";
+import Cl_mCuadrado from "./Cl_mCuadrado.js";
+import Cl_mFigura from "./Cl_mFigura.js";
+
+export default class Cl_mProcesador {
+  private acAreaCuadrados: number = 0;
+  private acAreaCirculos: number = 0;
+  private mayorArea: number = -1;
+  private figuraMayor: Cl_mFigura | null = null;
+
+  procesarFigura(figura: Cl_mFigura) {
+    // Acumula el área dependiendo del tipo de figura
+    if (figura instanceof Cl_mCuadrado) {
+      this.acAreaCuadrados += figura.area();
+    } else if (figura instanceof Cl_mCirculo) {
+      this.acAreaCirculos += figura.area();
+    }
+
+    // Compara y guarda la figura con el área más grande hasta el momento
+    if (figura.area() > this.mayorArea) {
+      this.mayorArea = figura.area();
+      this.figuraMayor = figura;
+    }
+  }
+
+  // Devuelve el área total sumando las áreas de todas las figuras
+  areaTotal(): number {
+    return this.acAreaCuadrados + this.acAreaCirculos;
+  }
+
+  // Devuelve el código de la figura que cubre más espacio
+  figuraMayorEspacio(): string {
+    return this.figuraMayor ? this.figuraMayor.codigo : "Ninguna";
+  }
+}
+
+--------------------------------------------------------
+
+ok bien.... ahora te entrego el ejemplo del MVC-VISTA en el proyecto SEGURÍSIMOS, para que me entregues las vistas en este nuevo proyecto GEOMETRÍA-3.
+
+La clase vGeneral.ts es una clase genérica que sirve para simplificar la creación de atributos del DOM.
+
+La clase vPoliza es una super clase de vVehiculo y vVida.
+
+El estilo de diseño de la GUI tiene un patrón bastante claro, y es un pseudo-framework.
+
+Quiero que me entregues las vistas para este nuevo proyecto GEOMETRÍA-3
+
+Claro, entiendo perfectamente el patrón. He analizado la estructura de las vistas del proyecto "SEGURÍSIMOS" y he replicado esa misma arquitectura y estilo para el proyecto "GEOMETRÍA-3".
+A continuación, te presento el código TypeScript para cada una de las clases de la capa Vista.
+________________________________________
+Cl_vGeneral.ts
+Esta es la clase base genérica, prácticamente idéntica a la del ejemplo, ya que su propósito es servir como una utilidad para interactuar con el DOM. Mantiene la lógica para crear y gestionar elementos HTML de forma simplificada.
+TypeScript
+import Cl_controlador from "./Cl_controlador.js";
+
+export default class Cl_vGeneral {
+  private _formName: string = "";
+  private _vista: HTMLElement | null = null;
+  private _controlador: Cl_controlador | null = null;
+
+  constructor({ formName }: { formName: string }) {
+    this.formName = formName;
+    this.vista = this.crearHTMLElement({
+      elementName: this.formName,
+      isForm: true,
+    });
+  }
+
+  set formName(formName: string) {
+    this._formName = formName;
+  }
+  get formName(): string {
+    return this._formName;
+  }
+
+  set vista(vista: HTMLElement) {
+    this._vista = vista;
+  }
+  get vista(): HTMLElement | null {
+    return this._vista;
+  }
+
+  set controlador(controlador: Cl_controlador) {
+    this._controlador = controlador;
+  }
+  get controlador(): Cl_controlador | null {
+    return this._controlador;
+  }
+
+  crearHTMLElement({
+    elementName,
+    isForm = false,
+  }: {
+    elementName: string;
+    isForm?: boolean;
+  }): HTMLElement {
+    let domElementName = isForm
+      ? elementName
+      : `${this.formName}_${elementName}`;
+    let domElement = document.getElementById(domElementName) as HTMLElement;
+    if (!domElement) {
+      let msg = `Elemento ${domElementName} no encontrado`;
+      alert(msg);
+      throw new Error(msg);
+    }
+    return domElement;
+  }
+
+  crearHTMLInputElement({
+    elementName,
+  }: {
+    elementName: string;
+  }): HTMLInputElement {
+    let domElementName = `${this.formName}_${elementName}`;
+    let domElement = document.getElementById(
+      domElementName
+    ) as HTMLInputElement;
+    if (!domElement) {
+      let msg = `Elemento ${domElementName} no encontrado`;
+      alert(msg);
+      throw new Error(msg);
+    }
+    return domElement;
+  }
+
+  crearHTMLButtonElement({
+    elementName,
+    onclick,
+  }: {
+    elementName: string;
+    onclick?: () => void;
+  }): HTMLButtonElement {
+    let domElementName = `${this.formName}_${elementName}`;
+    let domElement = document.getElementById(
+      domElementName
+    ) as HTMLButtonElement;
+    if (!domElement) {
+      let msg = `Elemento ${domElementName} no encontrado`;
+      alert(msg);
+      throw new Error(msg);
+    }
+    if (onclick) domElement.onclick = onclick;
+    return domElement;
+  }
+
+  show({ ver = true }: { ver?: boolean } = { ver: true }): void {
+    if (this.vista) this.vista.style.display = ver ? "flex" : "none";
+  }
+}
+________________________________________
+Cl_vFigura.ts
+Esta es la clase base para los formularios de figuras, análoga a Cl_vPoliza. Contiene los campos comunes a todas las figuras: código, coordenada X y coordenada Y. También gestiona el botón "Cancelar".
+TypeScript
+import Cl_vGeneral from "./Cl_vGeneral.js";
+
+export default class Cl_vFigura extends Cl_vGeneral {
+  private inCodigo: HTMLInputElement;
+  private inCoordX: HTMLInputElement;
+  private inCoordY: HTMLInputElement;
+  private lblTipo: HTMLElement;
+  private btCancelar: HTMLButtonElement;
+
+  constructor() {
+    super({ formName: "figuraForm" });
+    this.lblTipo = this.crearHTMLElement({ elementName: "lblTipo" });
+    this.inCodigo = this.crearHTMLInputElement({ elementName: "inCodigo" });
+    this.inCoordX = this.crearHTMLInputElement({
+      elementName: "inCoordX",
+    });
+    this.inCoordY = this.crearHTMLInputElement({
+      elementName: "inCoordY",
+    });
+    this.btCancelar = this.crearHTMLButtonElement({
+      elementName: "btCancelar",
+      onclick: () => {
+        this.show({ ver: false });
+        this.controlador?.vista.show();
+      },
+    });
+  }
+
+  get codigo(): string {
+    return this.inCodigo.value;
+  }
+  get coordX(): number {
+    return +this.inCoordX.value;
+  }
+  get coordY(): number {
+    return +this.inCoordY.value;
+  }
+
+  show({
+    ver = true,
+    nombreTipo = "",
+  }: {
+    ver?: boolean;
+    nombreTipo?: string;
+  }): void {
+    super.show({ ver });
+    this.lblTipo.innerHTML = nombreTipo;
+    this.inCodigo.value = "";
+    this.inCoordX.value = "";
+    this.inCoordY.value = "";
+    this.inCodigo.focus();
+  }
+}
+________________________________________
+Cl_vCuadrado.ts
+Vista específica para el Cuadrado. Hereda de Cl_vFigura y añade el campo para la longitud del lado. El botón "Aceptar" invoca al método correspondiente en el controlador para procesar un cuadrado.
+TypeScript
+import Cl_vFigura from "./Cl_vFigura.js";
+interface iCuadrado {
+  codigo: string;
+  coordX: number;
+  coordY: number;
+  lado: number;
+}
+
+export default class Cl_vCuadrado extends Cl_vFigura {
+  private divInLado: HTMLElement;
+  private inLado: HTMLInputElement;
+  private btAceptar: HTMLElement;
+
+  constructor() {
+    super();
+    this.divInLado = this.crearHTMLElement({ elementName: "divInLado" });
+    this.inLado = this.crearHTMLInputElement({ elementName: "inLado" });
+    this.btAceptar = this.crearHTMLButtonElement({
+      elementName: "btAceptarCuadrado",
+      onclick: () => this.controlador?.procesarCuadrado({
+        codigo: this.codigo,
+        coordX: this.coordX,
+        coordY: this.coordY,
+        lado: this.lado
+      }),
+    });
+  }
+
+  get lado(): number {
+    return +this.inLado.value;
+  }
+
+  show({ ver = true }: { ver?: boolean } = { ver: true }) {
+    super.show({ ver, nombreTipo: "Cuadrado" });
+    this.inLado.value = "";
+    this.divInLado.hidden = ver === false;
+    this.btAceptar.hidden = ver === false;
+  }
+}
+export { iCuadrado };
+________________________________________
+Cl_vCirculo.ts
+Vista específica para el Círculo. Hereda de Cl_vFigura y añade el campo para la longitud del radio. Su botón "Aceptar" llama al método del controlador para procesar un círculo.
+TypeScript
+import Cl_vFigura from "./Cl_vFigura.js";
+interface iCirculo {
+  codigo: string;
+  coordX: number;
+  coordY: number;
+  radio: number;
+}
+
+export default class Cl_vCirculo extends Cl_vFigura {
+  private divInRadio: HTMLElement;
+  private inRadio: HTMLInputElement;
+  private btAceptar: HTMLElement;
+
+  constructor() {
+    super();
+    this.divInRadio = this.crearHTMLElement({ elementName: "divInRadio" });
+    this.inRadio = this.crearHTMLInputElement({ elementName: "inRadio" });
+    this.btAceptar = this.crearHTMLButtonElement({
+      elementName: "btAceptarCirculo",
+      onclick: () => this.controlador?.procesarCirculo({
+        codigo: this.codigo,
+        coordX: this.coordX,
+        coordY: this.coordY,
+        radio: this.radio
+      }),
+    });
+  }
+
+  get radio(): number {
+    return +this.inRadio.value;
+  }
+
+  show({ ver = true }: { ver?: boolean } = { ver: true }) {
+    super.show({ ver, nombreTipo: "Círculo" });
+    this.inRadio.value = "";
+    this.divInRadio.hidden = ver === false;
+    this.btAceptar.hidden = ver === false;
+  }
+}
+export { iCirculo };
+________________________________________
+Cl_vGeometria.ts
+Esta es la vista principal, equivalente a Cl_vAseguradora. Orquesta las subvistas (Cl_vCuadrado y Cl_vCirculo), contiene los botones para agregar cada tipo de figura y muestra los resultados finales: el área total y cuál es la figura con mayor espacio.
+TypeScript
+import Cl_vCuadrado from "./Cl_vCuadrado.js";
+import Cl_vCirculo from "./Cl_vCirculo.js";
+import Cl_controlador from "./Cl_controlador.js";
+import Cl_vGeneral from "./Cl_vGeneral.js";
+
+interface iFigura {
+  codigo: string;
+  coordX: number;
+  coordY: number;
+  lado?: number;
+  radio?: number;
+  area: number;
+  perimetro: number;
+  tipo: string;
+}
+
+export default class Cl_vGeometria extends Cl_vGeneral {
+  private _vCuadrado: Cl_vCuadrado;
+  private _vCirculo: Cl_vCirculo;
+  private dataFiguras: HTMLElement;
+  private lblAreaTotal: HTMLElement;
+  private lblFiguraMayor: HTMLElement;
+  private btAgregarCuadrado: HTMLElement;
+  private btAgregarCirculo: HTMLElement;
+
+  constructor() {
+    super({ formName: "mainForm" });
+    this._vCuadrado = new Cl_vCuadrado();
+    this._vCirculo = new Cl_vCirculo();
+    this.dataFiguras = this.crearHTMLElement({ elementName: "dataFiguras" });
+    this.lblAreaTotal = this.crearHTMLElement({ elementName: "lblAreaTotal" });
+    this.lblFiguraMayor = this.crearHTMLElement({ elementName: "lblFiguraMayor" });
+
+    this.btAgregarCuadrado = this.crearHTMLButtonElement({
+      elementName: "btAgregarCuadrado",
+      onclick: () => {
+        this.show({ ver: false });
+        this.vCuadrado.show();
+      },
+    });
+    this.btAgregarCirculo = this.crearHTMLButtonElement({
+      elementName: "btAgregarCirculo",
+      onclick: () => {
+        this.show({ ver: false });
+        this.vCirculo.show();
+      },
+    });
+
+    this.dataFiguras.innerHTML = "";
+    this.vCuadrado.show({ ver: false });
+    this.vCirculo.show({ ver: false });
+  }
+
+  set controlador(controlador: Cl_controlador) {
+    super.controlador = controlador;
+    this.vCuadrado.controlador = controlador;
+    this.vCirculo.controlador = controlador;
+  }
+
+  get vCuadrado() {
+    return this._vCuadrado;
+  }
+  get vCirculo() {
+    return this._vCirculo;
+  }
+
+  reportarFigura({
+    dataFigura,
+    areaTotal,
+    figuraMayor,
+  }: {
+    dataFigura: iFigura;
+    areaTotal: number;
+    figuraMayor: string;
+  }): void {
+    this.dataFiguras.innerHTML += `
+      <tr>
+        <td class="colString">${dataFigura.codigo}</td>
+        <td class="colString">${dataFigura.tipo}</td>
+        <td class="colNumber">${dataFigura.coordX}</td>
+        <td class="colNumber">${dataFigura.coordY}</td>
+        <td class="colNumber">${dataFigura.lado ? dataFigura.lado : "--"}</td>
+        <td class="colNumber">${dataFigura.radio ? dataFigura.radio : "--"}</td>
+        <td class="colNumber">${dataFigura.area.toFixed(2)}</td>
+        <td class="colNumber">${dataFigura.perimetro.toFixed(2)}</td>
+      </tr>
+    `;
+    this.lblAreaTotal.innerHTML = areaTotal.toFixed(2);
+    this.lblFiguraMayor.innerHTML = figuraMayor;
+  }
+
+  show({ ver = true }: { ver?: boolean } = { ver: true }) {
+    super.show({ ver });
+    if (ver) {
+      this.vCuadrado.show({ ver: false });
+      this.vCirculo.show({ ver: false });
+    }
+  }
+}
+
+---------------------------------------------
+
+Te anexo ahora el index.html de SEGURÍSIMOS y quiero me entregues el respectivo para GEOMETRÍA-3.
+
+También te anexo el controlador y la clase Cl_index.ts.
+
+Quiero que entregues los respectivos archivos para este proyecto GEOMETRÍA-3
+
+¡Excelente! Con los ejemplos del controlador, el index.html y el punto de entrada Cl_index.ts, ya tenemos todo lo necesario para completar el proyecto GEOMETRÍA-3.
+He adaptado la lógica y la estructura de "SEGURÍSIMOS" para que se ajusten a las necesidades de las figuras geométricas. A continuación, te presento los archivos finales.
+________________________________________
+index.html
+Este es el esqueleto de la interfaz de usuario. Sigue la misma estructura de dos secciones que el proyecto de ejemplo: una sección principal para mostrar los resultados (mainForm) y un formulario oculto para la entrada de datos (figuraForm).
+HTML
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOMETRÍA-3</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>GEOMETRÍA-3</h2>
+    
+    <section id="figuraForm" hidden>
+        <h3 style="width: 250px;">Figura: <span id="figuraForm_lblTipo"></span></h3>
+        <label>Código:
+            <input type="text" id="figuraForm_inCodigo"></input>
+        </label>
+        <label>Coordenada X:
+            <input type="number" id="figuraForm_inCoordX"></input>
+        </label>
+        <label>Coordenada Y:
+            <input type="number" id="figuraForm_inCoordY"></input>
+        </label>
+        <label hidden id="figuraForm_divInLado">Lado:
+            <input type="number" id="figuraForm_inLado"></input>
+        </label>
+        <label hidden id="figuraForm_divInRadio">Radio:
+            <input type="number" id="figuraForm_inRadio"></input>
+        </label>
+        <div>
+            <button id="figuraForm_btAceptarCuadrado" hidden>Aceptar</button>
+            <button id="figuraForm_btAceptarCirculo" hidden>Aceptar</button>
+            <button id="figuraForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="mainForm">
+        <h3>Figuras Procesadas</h3>
+        <table>
+            <thead>
+                <th>Código</th>
+                <th>Tipo</th>
+                <th>Coord X</th>
+                <th>Coord Y</th>
+                <th>Lado</th>
+                <th>Radio</th>
+                <th>Área</th>
+                <th>Perímetro</th>
+            </thead>
+            <tbody id="mainForm_dataFiguras"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarCuadrado">+ Cuadrado</button>
+            <button id="mainForm_btAgregarCirculo">+ Círculo</button>
+        </div>
+        <h3>Resultados del Procesador</h3>
+        <div class="divSalida">
+            <label>Área Total de todas las figuras:
+                <span id="mainForm_lblAreaTotal"></span>
+            </label>
+            <label>Figura que cubre mayor espacio:
+                <span id="mainForm_lblFiguraMayor"></span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+
+</html>
+________________________________________
+_data.ts (Archivo de datos de prueba)
+Para mantener el código limpio, he separado los datos de prueba en su propio archivo, tal como en el proyecto de ejemplo.
+TypeScript
+// Datos de prueba para Cuadrados
+const cuadrados = [
+    { codigo: "cuad1", coordX: 2, coordY: 4, lado: 3 },
+    { codigo: "cuad2", coordX: 1, coordY: 2, lado: 5 },
+    { codigo: "cuad3", coordX: 1, coordY: -2, lado: 4 },
+    { codigo: "cuad4", coordX: 0, coordY: 0, lado: 8 },
+];
+
+// Datos de prueba para Círculos
+const circulos = [
+    { codigo: "circ1", coordX: 3, coordY: 0, radio: 4 },
+    { codigo: "circ2", coordX: 1, coordY: -3, radio: 2 },
+    { codigo: "circ3", coordX: 0, coordY: 0, radio: 3 },
+    { codigo: "circ4", coordX: -2, coordY: -4, radio: 5 },
+];
+
+export { cuadrados, circulos };
+________________________________________
+Cl_controlador.ts
+El controlador actúa como el intermediario. Recibe las peticiones de la vista (cuando el usuario hace clic en "Aceptar"), crea las instancias del modelo (Cl_mCuadrado, Cl_mCirculo), las envía al procesador (Cl_mProcesador) y finalmente le pide a la vista que se actualice con los nuevos resultados.
+TypeScript
+import Cl_mProcesador from "./Cl_mProcesador.js";
+import Cl_mFigura from "./Cl_mFigura.js";
+import Cl_mCuadrado from "./Cl_mCuadrado.js";
+import Cl_mCirculo from "./Cl_mCirculo.js";
+import Cl_vGeometria from "./Cl_vGeometria.js";
+import { iCuadrado } from "./Cl_vCuadrado.js";
+import { iCirculo } from "./Cl_vCirculo.js";
+
+export default class Cl_controlador {
+  public modelo: Cl_mProcesador;
+  public vista: Cl_vGeometria;
+
+  constructor(modelo: Cl_mProcesador, vista: Cl_vGeometria) {
+    this.modelo = modelo;
+    this.vista = vista;
+  }
+
+  procesarCuadrado(data: iCuadrado) {
+    const mCuadrado = new Cl_mCuadrado({
+      codigo: data.codigo,
+      coordX: data.coordX,
+      coordY: data.coordY,
+      lado: data.lado,
+    });
+    this.modelo.procesarFigura(mCuadrado);
+    this.reportarFigura({ mFigura: mCuadrado });
+  }
+
+  procesarCirculo(data: iCirculo) {
+    const mCirculo = new Cl_mCirculo({
+      codigo: data.codigo,
+      coordX: data.coordX,
+      coordY: data.coordY,
+      radio: data.radio,
+    });
+    this.modelo.procesarFigura(mCirculo);
+    this.reportarFigura({ mFigura: mCirculo });
+  }
+
+  reportarFigura({ mFigura }: { mFigura: Cl_mFigura }) {
+    this.vista.reportarFigura({
+      dataFigura: mFigura.toJSON(),
+      areaTotal: this.modelo.areaTotal(),
+      figuraMayor: this.modelo.figuraMayorEspacio(),
+    });
+    this.vista.show(); // Vuelve a la vista principal después de procesar
+  }
+}
+________________________________________
+Cl_index.ts (Punto de Entrada)
+Esta es la clase principal que se ejecuta al cargar la página. Su única responsabilidad es instanciar el Modelo, la Vista y el Controlador, y conectarlos entre sí. También se encarga de cargar los datos de prueba iniciales.
+TypeScript
+import Cl_mProcesador from "./Cl_mProcesador.js";
+import Cl_controlador from "./Cl_controlador.js";
+import Cl_vGeometria from "./Cl_vGeometria.js";
+import { cuadrados, circulos } from "./_data.js";
+
+export default class Cl_index {
+  private controlador: Cl_controlador;
+
+  constructor() {
+    // 1. Instanciar la Vista Principal
+    const vista = new Cl_vGeometria();
+    // 2. Instanciar el Modelo Principal (Procesador)
+    const modelo = new Cl_mProcesador();
+    // 3. Instanciar el Controlador, pasándole el Modelo y la Vista
+    this.controlador = new Cl_controlador(modelo, vista);
+    // 4. Asignar el controlador a la vista para la comunicación
+    vista.controlador = this.controlador;
+
+    // Cargar los datos de prueba iniciales
+    this.iniciarData();
+  }
+
+  iniciarData() {
+    cuadrados.forEach(c => this.controlador.procesarCuadrado(c));
+    circulos.forEach(c => this.controlador.procesarCirculo(c));
+  }
+}
+
+-------------------------------------------------
+
+Tienes un error en Cl_mProcesador.
+
+Me entregaste la figura con mayor espacio, te pedí el tipo de figura que cubre mayor espacio, si unes por tipo de figura.
+
+¡Tienes toda la razón! Mil disculpas, interpreté mal ese requerimiento. No se trataba de la figura individual con mayor área, sino de qué tipo de figura, en su totalidad, ocupa más espacio.
+Ha sido un excelente punto y demuestra que estás muy atento a los detalles del proyecto. 👍
+Aquí te entrego la versión corregida de la clase Cl_mProcesador.ts. He modificado la lógica para que acumule las áreas por tipo de figura y luego las compare para determinar cuál de los dos grupos (círculos o cuadrados) cubre una mayor superficie.
+________________________________________
+Cl_mProcesador.ts (Corregido)
+Esta versión ahora sí cumple con el requerimiento de comparar la suma total de las áreas de los cuadrados contra la suma total de las áreas de los círculos.
+TypeScript
+import Cl_mCirculo from "./Cl_mCirculo.js";
+import Cl_mCuadrado from "./Cl_mCuadrado.js";
+import Cl_mFigura from "./Cl_mFigura.js";
+
+export default class Cl_mProcesador {
+  private acAreaCuadrados: number = 0;
+  private acAreaCirculos: number = 0;
+
+  procesarFigura(figura: Cl_mFigura) {
+    // Acumula el área dependiendo del tipo de figura
+    if (figura instanceof Cl_mCuadrado) {
+      this.acAreaCuadrados += figura.area();
+    } else if (figura instanceof Cl_mCirculo) {
+      this.acAreaCirculos += figura.area();
+    }
+  }
+
+  // Devuelve el área total sumando las áreas de todas las figuras
+  areaTotal(): number {
+    return this.acAreaCuadrados + this.acAreaCirculos;
+  }
+
+  // Compara la suma de las áreas de cada tipo y devuelve el nombre del tipo con mayor área total
+  figuraMayorEspacio(): string {
+    if (this.acAreaCuadrados > this.acAreaCirculos) {
+      return "Cuadrado";
+    } else if (this.acAreaCirculos > this.acAreaCuadrados) {
+      return "Círculo";
+    } else {
+      // Maneja el caso en que las áreas totales sean iguales
+      return "Empate";
+    }
+  }
+}
+El resto de los archivos que te entregué (Cl_controlador.ts, Cl_vGeometria.ts, etc.) no necesitan cambios, ya que el método figuraMayorEspacio() sigue devolviendo un string, que es lo que la vista espera para mostrar el resultado.
+¡Gracias por la corrección! Ha sido un placer colaborar contigo en este proyecto.
+------------------------------------------
+
+Prepárame un Diagrama de Clases integral
+
+Claro, aquí tienes el Diagrama de Clases integral para el proyecto GEOMETRÍA-3.
+Este diagrama UML visualiza la arquitectura MVC completa, mostrando cómo se relacionan las clases del Modelo, la Vista y el Controlador.
+________________________________________
+Diagrama de Clases: GEOMETRÍA-3
+Fragmento de código
+classDiagram
+    direction LR
+
+    package Modelo {
+        class Cl_mFigura {
+            <<Abstract>>
+            # _codigo: string
+            # _coordX: number
+            # _coordY: number
+            + constructor(codigo, coordX, coordY)
+            + area(): number
+            + perimetro(): number
+            + toJSON(): object
+        }
+
+        class Cl_mCuadrado {
+            - _lado: number
+            + constructor(codigo, coordX, coordY, lado)
+            + area(): number
+            + perimetro(): number
+        }
+
+        class Cl_mCirculo {
+            - _radio: number
+            + constructor(codigo, coordX, coordY, radio)
+            + area(): number
+            + perimetro(): number
+        }
+
+        class Cl_mProcesador {
+            - acAreaCuadrados: number
+            - acAreaCirculos: number
+            + procesarFigura(figura: Cl_mFigura): void
+            + areaTotal(): number
+            + figuraMayorEspacio(): string
+        }
+
+        Cl_mFigura <|-- Cl_mCuadrado
+        Cl_mFigura <|-- Cl_mCirculo
+        Cl_mProcesador "1" o-- "n" Cl_mFigura : procesa
+    }
+
+    package Vista {
+        class Cl_vGeneral {
+            - _formName: string
+            - _vista: HTMLElement
+            # _controlador: Cl_controlador
+            + constructor(formName)
+            + crearHTMLElement(): HTMLElement
+            + crearHTMLInputElement(): HTMLInputElement
+            + crearHTMLButtonElement(): HTMLButtonElement
+            + show(ver): void
+        }
+
+        class Cl_vFigura {
+            - inCodigo: HTMLInputElement
+            - inCoordX: HTMLInputElement
+            - inCoordY: HTMLInputElement
+            + constructor()
+            + show(ver, nombreTipo): void
+        }
+
+        class Cl_vCuadrado {
+            - inLado: HTMLInputElement
+            + constructor()
+            + show(ver): void
+        }
+
+        class Cl_vCirculo {
+            - inRadio: HTMLInputElement
+            + constructor()
+            + show(ver): void
+        }
+
+        class Cl_vGeometria {
+            - _vCuadrado: Cl_vCuadrado
+            - _vCirculo: Cl_vCirculo
+            - dataFiguras: HTMLElement
+            + constructor()
+            + reportarFigura(data): void
+        }
+
+        Cl_vGeneral <|-- Cl_vFigura
+        Cl_vFigura <|-- Cl_vCuadrado
+        Cl_vFigura <|-- Cl_vCirculo
+        Cl_vGeneral <|-- Cl_vGeometria
+        Cl_vGeometria "1" *-- "1" Cl_vCuadrado : contiene
+        Cl_vGeometria "1" *-- "1" Cl_vCirculo : contiene
+    }
+
+    package Controlador {
+        class Cl_controlador {
+            + modelo: Cl_mProcesador
+            + vista: Cl_vGeometria
+            + constructor(modelo, vista)
+            + procesarCuadrado(data): void
+            + procesarCirculo(data): void
+            + reportarFigura(mFigura): void
+        }
+
+        class Cl_index {
+            - controlador: Cl_controlador
+            + constructor()
+            + iniciarData(): void
+        }
+
+        Cl_index ..> Cl_controlador : crea
+        Cl_index ..> Cl_mProcesador : crea
+        Cl_index ..> Cl_vGeometria : crea
+    }
+    
+    Cl_controlador ..> Cl_mProcesador : usa
+    Cl_controlador ..> Cl_vGeometria : usa
+    Cl_vGeometria ..> Cl_controlador : notifica
+
+Explicación del Diagrama:
+1.	Paquete Modelo:
+o	Cl_mFigura es la clase base abstracta que define las propiedades comunes (codigo, coordX, coordY) y los métodos que deben ser implementados por sus hijas (area, perimetro).
+o	Cl_mCuadrado y Cl_mCirculo heredan de Cl_mFigura y proveen la implementación específica de los cálculos de área y perímetro.
+o	Cl_mProcesador tiene una relación de agregación con Cl_mFigura, indicando que procesa múltiples objetos de tipo figura para realizar cálculos globales (areaTotal, figuraMayorEspacio).
+2.	Paquete Vista:
+o	Cl_vGeneral es la clase base que encapsula la lógica genérica para interactuar con elementos del DOM.
+o	Cl_vFigura hereda de Cl_vGeneral y define los campos comunes del formulario para todas las figuras.
+o	Cl_vCuadrado y Cl_vCirculo heredan de Cl_vFigura, añadiendo los campos específicos (lado y radio).
+o	Cl_vGeometria es la vista principal que compone (tiene instancias de) Cl_vCuadrado y Cl_vCirculo para gestionar la interfaz de usuario completa.
+3.	Paquete Controlador:
+o	Cl_controlador es el núcleo que conecta el Modelo y la Vista. Tiene referencias directas a Cl_mProcesador (el modelo principal) y a Cl_vGeometria (la vista principal).
+o	Cl_index es el punto de entrada de la aplicación. Su única función es crear las instancias iniciales del Modelo, la Vista y el Controlador.
+4.	Relaciones entre Paquetes (MVC):
+o	La Vista (Cl_vGeometria) notifica al Controlador cuando el usuario realiza una acción (por ejemplo, hacer clic en un botón).
+o	El Controlador recibe la notificación, crea y actualiza los objetos del Modelo (Cl_mProcesador, Cl_mCuadrado, etc.).
+o	Finalmente, el Controlador le pide a la Vista que se actualice para reflejar los cambios en el Modelo.
+

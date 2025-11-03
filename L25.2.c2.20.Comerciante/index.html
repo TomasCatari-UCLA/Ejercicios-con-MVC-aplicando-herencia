@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comerciante</title>
+    <link rel="stylesheet" href="styles.css" /> 
+</head>
+
+<body>
+    <h2>Comerciante</h2>
+    <section id="comercianteForm" hidden>
+        <h3 style="width: 235px;">Persona: <span id="comercianteForm_lblTipo"></span></h3>
+        <label>Cedula:
+            <input type="text" id="comercianteForm_inCedula" />
+        </label>
+        <label>Nombre:
+            <input type="text" id="comercianteForm_inNombre" />
+        </label>
+        <label>Edad:
+            <input type="number" id="comercianteForm_inEdad" />
+        </label>
+        <label>Sexo:
+            <select id="comercianteForm_inSexo">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
+        </label>
+        <label>Estado Civil:
+            <select id="comercianteForm_inEdoCivil">
+                <option value="1">Soltero</option>
+                <option value="2">Casado</option>
+                <option value="3">Viudo</option>
+                <option value="4">Divorciado</option>
+            </select>
+        </label>
+        <div>
+            <button id="comercianteForm_btAceptar">Aceptar</button>
+            <button id="comercianteForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+    <section id="mainForm">
+        <h3>Personas procesadas</h3>
+        <table>
+            <thead>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Sexo</th>
+                <th>Estado Civil</th>
+                <th>% Aprobado</th>
+            </thead>
+            <tbody id="mainForm_dataPersona"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarComerciante">Agregar Comerciante</button>
+        </div>
+        <h3>Estadisticas</h3>
+        <div class="divSalida">
+            <label>Creditos totales aprobados:
+            <span id="mainForm_lblCreditosAprobados"></span>
+            </label>
+            <label>Creditos totales rechazados:
+            <span id="mainForm_lblCreditosRechazados"></span>
+            </label>
+        </div>
+    </section>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+</html>

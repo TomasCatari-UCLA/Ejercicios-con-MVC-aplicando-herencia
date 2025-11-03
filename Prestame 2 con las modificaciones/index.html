@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos para la defensa</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h2>PRESTAME-2</h2>
+    <section id="prestamoForm" hidden>
+        <h3 style="width: 250px;">Prestamo de <span id="prestamoForm_lblTipo"></span></h3>
+        <label>Cedula:
+            <input type="string" id="prestamoForm_inCedula"></input>
+        </label>
+        <label>Estado Civil:
+            <input type="string" id="prestamoForm_inEstadoCivil"></input>
+        </label>
+        
+        <div id="prestamoForm_divMontoPrestamo"> 
+            <label>Monto Prestamo:
+                <input type="number" id="prestamoForm_inMontoPrestamo"></input>
+            </label>
+        </div>
+        <label hidden id="prestamoForm_divInModelo">Modelo:
+            <input type="string" id="prestamoForm_inModelo"></input>
+        </label>
+        <div>
+            <button id="prestamoForm_btAceptarVivienda" hidden>Aceptar</button>
+            <button id="prestamoForm_btAceptarVehiculo" hidden>Aceptar</button>
+            <button id="prestamoForm_btCancelar">Cancelar</button>
+        </div>
+    </section>
+    <section id="mainForm">
+        <h3>Prestamos procesados</h3>
+        <table>
+            <thead>
+                <th>Cedula</th>
+                <th>Estado Civil</th>
+                <th>Monto del prestamo</th>
+                <th>Modelo</th>
+                <th>Monto final prestamo</th>
+                <th>Intereses</th>
+            </thead>
+            <tbody id="mainForm_dataPrestamo"></tbody>
+        </table>
+        <div class="divBotones">
+            <button id="mainForm_btAgregarVivienda">+Prestamo Vivienda</button>
+            <button id="mainForm_btAgregarVehiculo">+Prestamo vehículo</button>
+        </div>
+        <h3>Información del Banco</h3>
+        <div class="divSalida">
+            <label>Monto total en prestamos:$
+                <span id="mainForm_lblMontoTotalPrestamos"></span>
+            </label>
+            <label>Monto total de intereses:$
+                <span id="mainForm_lblMontoTotalIntereses"></span>
+            </label>
+            <label>Porcentaje de intereses:%
+                <span id="mainForm_lblPorcentajeIntereses"></span>
+            </label>
+            <label>Monto de intereses no percibidos:$
+                <span id="mainForm_lbltotalInteresNoP"></span> <!-- aa -->
+            </label>
+        </div>
+    </section>
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+section {
+  border: 5px solid rgba(0, 44, 94, 0.973);
+  margin-top: 10px;
+  padding: 50px;
+  border-radius: 3cap;
+}
+label {
+  margin-top: 5px;
+}
+h3 {
+  color: rgb(0, 0, 0);
+  background-color: rgb(186, 69, 253);
+  padding: 3px;
+  border-radius: 5cap;
+  text-align: center;
+}
+h4 {
+  margin-top: 1px;
+  margin-bottom: 0px;
+  font-style: arial;
+  font-weight: normal;
+  color: rgb(0, 0, 0);
+}
+button {
+  margin-top: 10px;
+  background-color: rgb(201, 50, 247);
+  color: rgb(0, 0, 0);
+  border-radius: 1cap;
+  padding: 5px;
+}
+input {
+  width: 100px;
+}
+table,
+th,
+td {
+  border: 1px solid rgb(70, 2, 38);
+  text-align: center;
+}
+#comercianteForm {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  width: 250px;
+}
+#mainForm {
+  display: flex;
+  flex-direction: column;
+  width: 530px;
+}
+.colCurrency {
+  text-align: right;
+  padding-left: 10px;
+}
+.colNumber {
+  column-width: 50px;
+}
+.divSalida {
+  display: flex;
+  flex-direction: column;
+}
