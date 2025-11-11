@@ -11,6 +11,7 @@ export default class Cl_mBanco {
     this.acMontoPrestamos+=Prestamo.montoFinalP();
     this.acMontoInteres+=Prestamo.intereses();
   }
+  
   montoTotalPrestamos(): number {
     return this.acMontoPrestamos;
   }
